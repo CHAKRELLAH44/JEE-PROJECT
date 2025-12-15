@@ -1,6 +1,5 @@
 package com.mcommerce.microservice_commandes.client;
 
-import com.mcommerce.microservice_commandes.client.ProductFallback;
 import com.mcommerce.microservice_commandes.model.Product;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 )
 public interface ProductClient {
 
-    @GetMapping("/Produits/{id}")
+    @GetMapping("/api/products/{id}")
     Product getProductById(@PathVariable Long id);
 }
+

@@ -36,7 +36,39 @@ public class CommandeController {
 
     @GetMapping("/{id}/produit")
     public Product getProduit(@PathVariable Long id) {
+
         Commande cmd = service.getById(id);
+
+        if (cmd == null) {
+            throw new RuntimeException("Commande introuvable");
+        }
+
+        if (cmd.getIdProduit() == null) {
+            throw new RuntimeException("Aucun produit associé à cette commande");
+        }
+
         return service.getProduit(cmd.getIdProduit());
     }
+
+    @PutMapping("/{id}")
+    public Commande update(@PathVariable Long id, @RequestBody Commande newCmd) {
+        Commande cmd = service.getById(id);
+
+        if (cmd == null) return null;
+
+        cmd.setQuantite(newCmd.getQuantite());
+        cmd.setDescription(newCmd.getDescription());
+        cmd.setIdProduit(newCmd.getIdProduit());
+        cmd.setMontant(newCmd.getMontant());
+
+        return service.save(cmd);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteById(id);
+    }
+
+
 }

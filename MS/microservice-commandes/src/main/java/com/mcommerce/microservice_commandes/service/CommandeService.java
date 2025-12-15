@@ -34,4 +34,9 @@ public class CommandeService {
     public Product getProduit(Long idProduit) {
         return productClient.getProductById(idProduit);
     }
+
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
+
 }

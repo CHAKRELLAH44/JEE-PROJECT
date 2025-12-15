@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: produits-service
+          uri: lb://MICROSERVICE-PRODUITS
+          predicates:
+            - Path=/PRODUITS/**
+          filters:
+            - StripPrefix=1
+
+        - id: commandes-service
+          uri: lb://MICROSERVICE-COMMANDES
+          predicates:
+            - Path=/COMMANDES/**
+          filters:
+            - StripPrefix=1
+
+

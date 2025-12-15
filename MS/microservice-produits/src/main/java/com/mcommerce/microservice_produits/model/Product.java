@@ -1,12 +1,10 @@
 package com.mcommerce.microservice_produits.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,7 +14,16 @@ public class Product {
     private String image;
     private double prix;
 
-    // Getters / Setters
+    public Product() {}
+
+    public Product(Long id, String titre, String description, String image, double prix) {
+        this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.image = image;
+        this.prix = prix;
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -31,14 +38,4 @@ public class Product {
 
     public double getPrix() { return prix; }
     public void setPrix(double prix) { this.prix = prix; }
-
-    public Product(Long id, String titre, String description, String image, double prix) {
-        this.id = id;
-        this.titre = titre;
-        this.description = description;
-        this.image = image;
-        this.prix = prix;
-    }
-
-    public Product() {}
 }
