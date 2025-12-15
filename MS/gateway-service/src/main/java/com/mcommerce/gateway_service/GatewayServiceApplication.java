@@ -29,9 +29,10 @@ public class GatewayServiceApplication {
 	@Bean
 	public CorsWebFilter corsWebFilter() {
 		CorsConfiguration config = new CorsConfiguration();
-		config.addAllowedOrigin("*"); // accept tous les ports
+		config.addAllowedOriginPattern("*"); // 🔥 FIX: utiliser addAllowedOriginPattern au lieu de addAllowedOrigin
 		config.addAllowedMethod("*");
 		config.addAllowedHeader("*");
+		config.setAllowCredentials(false);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);

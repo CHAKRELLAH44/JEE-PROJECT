@@ -1,17 +1,32 @@
+server:
+  port: 9103
+
 spring:
   application:
     name: gateway-service
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
   cloud:
     gateway:
+      default-filters:
+        - PreserveHostHeader
       routes:
+
+        # -------- MICROSERVICE PRODUITS --------
         - id: produits-service
           uri: lb://MICROSERVICE-PRODUITS
           predicates:
             - Path=/PRODUITS/**
           filters:
             - StripPrefix=1
+            - PreserveHostHeader
 
+        # -------- MICROSERVICE COMMANDES --------
         - id: commandes-service
           uri: lb://MICROSERVICE-COMMANDES
           predicates:
@@ -19,4 +34,7 @@ spring:
           filters:
             - StripPrefix=1
 
-
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9102/eureka

@@ -6,3 +6,15 @@ export const createProduit = (produit) => api.post("/PRODUITS/api/products", pro
 export const updateProduit = (id, produit) => api.put(`/PRODUITS/api/products/${id}`, produit);
 export const deleteProduit = (id) => api.delete(`/PRODUITS/api/products/${id}`);
 
+
+export const uploadImage = (formData) =>
+  api.post("/PRODUITS/api/files/upload", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+# Bases de données H2 (fichiers générés)
+**/data/
+*.mv.db
+*.trace.db
+
+# Images uploadées (fichiers utilisateur)
+**/uploads/
+uploads*.webp
+uploads*.png
+uploads*.jpg
+uploads*.jpeg
+
+# Maven
+**/target/
+*.jar
+*.war
+*.ear
+
+# Node modules
+**/node_modules/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Logs
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.bak
+~$*
+

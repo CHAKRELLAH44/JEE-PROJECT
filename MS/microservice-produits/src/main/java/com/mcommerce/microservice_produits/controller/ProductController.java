@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;   // 🔥 IMPORT IMPORTANT
 
+import java.io.File;                                     // 🔥 IMPORT IMPORTANT
 import java.util.List;
+import java.util.Map;
 
+// @CrossOrigin supprimé - CORS géré par le Gateway
 @RestController
 @RequestMapping("/api/products")   // 🔥 FIX : route propre et standard
 public class ProductController implements HealthIndicator {
@@ -35,7 +39,7 @@ public class ProductController implements HealthIndicator {
         return productDao.findById(id).orElse(null);
     }
 
-    // POST - CREATE PRODUCT
+    // POST - CREATE PRODUCT (JSON normal)
     @PostMapping
     public Product create(@RequestBody Product product) {
         return productDao.save(product);
@@ -53,11 +57,54 @@ public class ProductController implements HealthIndicator {
         }).orElse(null);
     }
 
+
+
+    // POST - CREATE WITH IMAGE UPLOAD
+    @PostMapping("/upload-product")
+    public Product upload(
+            @RequestParam("titre") String titre,
+            @RequestParam("description") String description,
+            @RequestParam("prix") double prix,
+            @RequestParam("file") MultipartFile file
+    ) throws Exception {
+
+        // 📌 Chemin ABSOLU où stocker les uploads
+        String uploadPath = "C:\\Users\\Lenovo\\Documents\\5IIR\\jee\\Project\\MS\\microservice-produits\\uploads";
+
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Nom du fichier réel
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
+        // Sauvegarde finale
+        File dest = new File(uploadPath + fileName);
+        file.transferTo(dest);
+
+        // Création du produit
+        Product p = new Product();
+        p.setTitre(titre);
+        p.setDescription(description);
+        p.setPrix(prix);
+
+        // Ce lien sera utilisé dans React
+        p.setImage("/uploads/" + fileName);
+
+        return productDao.save(p);
+    }
+
+
+
+
     // DELETE
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
+
         productDao.deleteById(id);
     }
+
 
     @Override
     public Health health() {

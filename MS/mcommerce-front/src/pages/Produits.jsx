@@ -3,7 +3,8 @@ import {
   getProduits,
   createProduit,
   updateProduit,
-  deleteProduit
+  deleteProduit,
+  uploadImage
 } from "../services/produits.service";
 
 export default function Produits() {
@@ -11,94 +12,105 @@ export default function Produits() {
 
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");          // Nom du fichier
-  const [previewImage, setPreviewImage] = useState(null); // Aperçu avant ajout
   const [prix, setPrix] = useState("");
+
+  const [image, setImage] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
+  const [file, setFile] = useState(null);
 
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+
+  // Charger produits
+  const chargerProduits = () => {
+    getProduits().then(res => {
+      setProduits(res.data);
+      setLoading(false);
+    });
+  };
 
   useEffect(() => {
     chargerProduits();
   }, []);
 
-  const chargerProduits = () => {
-    getProduits()
-      .then(res => {
-        setProduits(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError("Erreur lors du chargement des produits");
-        console.error(err);
-      });
-  };
-
-  // 🔥 Gestion du fichier choisi
+  // Upload file → preview
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const f = e.target.files[0];
+    if (!f) return;
 
-    setImage(file.name);
-
-    // Aperçu affiché dans le formulaire
-    const previewUrl = URL.createObjectURL(file);
-    setPreviewImage(previewUrl);
+    setFile(f);
+    setPreviewImage(URL.createObjectURL(f));
   };
 
-  const submitProduit = () => {
-    if (!titre || prix === "") {
-      alert("Veuillez remplir tous les champs !");
-      return;
-    }
+const submitProduit = async () => {
+  if (!titre || prix === "") {
+    alert("Veuillez remplir tous les champs !");
+    return;
+  }
 
-    const produit = {
-      titre,
-      description,
-      image,        // on envoie seulement le NOM du fichier
-      prix: Number(prix)
-    };
+  let finalImageName = image;
 
-    if (editingId) {
-      updateProduit(editingId, produit).then(() => {
-        resetForm();
-        chargerProduits();
-      });
-    } else {
-      createProduit(produit).then(() => {
-        resetForm();
-        chargerProduits();
-      });
-    }
+  // Upload si nouvelle image
+  if (file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("titre", titre);
+    formData.append("description", description);
+    formData.append("prix", prix);
+
+    const res = await uploadImage(formData);
+    finalImageName = res.data;   // backend renvoie /uploads/xxxx.png
+  }
+
+  const produit = {
+    titre,
+    description,
+    prix: Number(prix),
+    image: finalImageName
   };
 
-  const supprimerProduit = (id) => {
-    deleteProduit(id).then(() => {
-      setProduits(produits.filter(p => p.id !== id));
-    });
+  if (editingId) {
+    await updateProduit(editingId, produit);
+  } else {
+    await createProduit(produit);
+  }
+
+  resetForm();
+  chargerProduits();
+};
+
+
+
+  // Delete
+  const deleteProd = async (id) => {
+    await deleteProduit(id);
+    setProduits(produits.filter(p => p.id !== id));
   };
 
+  // Edit
   const editProduit = (p) => {
     setEditingId(p.id);
     setTitre(p.titre);
     setDescription(p.description);
-    setImage(p.image);
     setPrix(p.prix);
-    setPreviewImage(p.image ? `/images/${p.image}` : null);
+    setImage(p.image);
+    // 🔥 Afficher l'image existante avec l'URL complète du backend
+    setPreviewImage(p.image ? `http://localhost:9103/PRODUITS${p.image}` : null);
+    setFile(null);
   };
 
+  // Reset
   const resetForm = () => {
     setEditingId(null);
     setTitre("");
     setDescription("");
+    setPrix("");
     setImage("");
     setPreviewImage(null);
-    setPrix("");
+    setFile(null);
   };
 
   if (loading) return <p>Chargement...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div>
@@ -111,12 +123,11 @@ export default function Produits() {
         <input type="text" placeholder="Description"
           value={description} onChange={e => setDescription(e.target.value)} />
 
-        {/* Choix du fichier */}
+        {/* Choisir une image */}
         <input type="file" accept="image/*" onChange={handleFileChange} />
 
-        {/* Aperçu */}
         {previewImage && (
-          <img src={previewImage} width="80" alt="preview" style={{ marginLeft: "10px" }} />
+          <img src={previewImage} width="90" alt="preview" style={{ marginLeft: 10 }} />
         )}
 
         <input type="number" placeholder="Prix"
@@ -136,13 +147,13 @@ export default function Produits() {
             <th>Titre</th>
             <th>Description</th>
             <th>Image</th>
-            <th>Prix (DH)</th>
+            <th>Prix</th>
             <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
-          {produits.map(p => (
+          {produits.map((p) => (
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.titre}</td>
@@ -150,27 +161,22 @@ export default function Produits() {
 
               <td>
                 {p.image ? (
-                  <img
-                    src={`/images/${p.image}`}
-                    width="60"
-                    alt={p.titre}
-                    onError={(e) => (e.target.style.display = "none")}
-                  />
-                ) : (
-                  "Aucune image"
-                )}
+                  <img src={`http://localhost:9103/PRODUITS${p.image}`} width="70" alt={p.titre} />
+                ) : "Aucune image"}
               </td>
 
-              <td>{p.prix}</td>
+              <td>{p.prix} DH</td>
 
               <td>
                 <button onClick={() => editProduit(p)}>✏</button>
-                <button onClick={() => supprimerProduit(p.id)}>❌</button>
+                <button onClick={() => deleteProd(p.id)}>❌</button>
               </td>
             </tr>
           ))}
         </tbody>
+
       </table>
+
     </div>
   );
 }
