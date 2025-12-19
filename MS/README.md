@@ -137,5 +137,5 @@ Les images sont stockées dans : `MS/microservice-produits/uploads/`
 **Joska Power** - CHAKRELLAH44
 
 ## 📄 Licence
-Projet académique - 5IIR JEE © 2025 - Tous droits réservés
+Projet académique Réalisé par Joska Power - 5IIR JEE © 2025 - Tous droits réservés
 
