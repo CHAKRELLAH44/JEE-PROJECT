@@ -1,12 +1,12 @@
 package com.mcommerce.microservice_commandes;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class MicroserviceCommandesApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 

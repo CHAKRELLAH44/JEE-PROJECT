@@ -7,15 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;   // 🔥 IMPORT IMPORTANT
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;                                     // 🔥 IMPORT IMPORTANT
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-// @CrossOrigin supprimé - CORS géré par le Gateway
 @RestController
-@RequestMapping("/api/products")   // 🔥 FIX : route propre et standard
+@RequestMapping("/api/products")   //
 public class ProductController implements HealthIndicator {
 
     @Autowired
@@ -68,7 +67,7 @@ public class ProductController implements HealthIndicator {
             @RequestParam("file") MultipartFile file
     ) throws Exception {
 
-        // 📌 Chemin ABSOLU où stocker les uploads
+        //  Chemin ABSOLU où stocker les uploads
         String uploadPath = "C:\\Users\\Lenovo\\Documents\\5IIR\\jee\\Project\\MS\\microservice-produits\\uploads";
 
         File uploadDir = new File(uploadPath);

@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileStorageService {
 
-    // 🔥 Utiliser un chemin ABSOLU pour éviter les problèmes
+    //  Utiliser un chemin ABSOLU pour éviter les problèmes
     private final String uploadDir = "C:\\Users\\Lenovo\\Documents\\5IIR\\jee\\Project\\MS\\microservice-produits\\uploads\\";
 
     public String saveFile(MultipartFile file) throws IOException {
@@ -16,7 +16,7 @@ public class FileStorageService {
         File directory = new File(uploadDir);
         if (!directory.exists()) directory.mkdirs();
 
-        // 🔥 Ajouter un timestamp pour éviter les conflits de noms
+        //  Ajouter un timestamp pour éviter les conflits de noms
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         String filePath = uploadDir + fileName;
 
