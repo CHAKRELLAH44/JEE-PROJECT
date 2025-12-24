@@ -1,4 +1,4 @@
-# 🛒 MCommerce — Microservices (Produits & Commandes) | Spring Cloud + React
+#  MCommerce — Microservices (Produits & Commandes) | Spring Cloud + React
 
 ## 1) Présentation du projet
 Ce projet est une mini-plateforme e-commerce construite en **architecture microservices**.  
@@ -16,7 +16,7 @@ L'objectif est de séparer les responsabilités (Produits / Commandes) tout en m
 
 ## 2) Technologies / Outils utilisés
 
-### ✅ Back-end
+###  Back-end
 - Java + Spring Boot
 - Spring Web (API REST)
 - Spring Data JPA (CRUD sans SQL manuel)
@@ -28,12 +28,12 @@ L'objectif est de séparer les responsabilités (Produits / Commandes) tout en m
 - Hystrix (fallback en cas de timeout — selon TP)
 - Swagger / OpenAPI (documentation API)
 
-### ✅ Front-end
+###  Front-end
 - ReactJS
 - Axios (appels API via Gateway)
 - UI : gestion produits + commandes + PDF reçu (selon ton front)
 
-### ✅ Tests
+###  Tests
 - Postman (CRUD + upload)
 - H2 Console (validation des données)
 - Eureka Dashboard (services visibles)
@@ -74,6 +74,8 @@ v                                              v
     |   (3000)    |
     +-------------+
 ```
+
+<img src="./docs/7.png" alt="Architecture globale" style="width: 80%; height: auto;" />
 
 ### 3.2 Flux de fonctionnement
 1. Le **Front React** appelle uniquement la **Gateway** (point d'entrée unique).
@@ -194,18 +196,22 @@ Le front communique uniquement avec : `http://localhost:9103` (Gateway)
 ## 9) Captures d'écran
 
 ### 9.1 Interface Produits
-<img width="1725" height="1016" alt="Interface Produits" src="https://github.com/user-attachments/assets/1" />
+<img src="./docs/1.png" alt="Interface Produits" style="width: 80%; height: auto;" />
 
-<img width="1725" height="1016" alt="Interface Produits" src="https://github.com/user-attachments/assets/1-1" />
+<img src="./docs/2.png" alt="creation Produits" style="width: 80%; height: auto;" />
 
 ### 9.2 Interface Commandes
-<img width="1725" height="1016" alt="Interface Commandes" src="https://github.com/user-attachments/assets/2-1" />
+<img src="./docs/3.png" alt="Interface Commandes" style="width: 80%; height: auto;" />
+
+<img src="./docs/4.png" alt="creation Commandes" style="width: 80%; height: auto;" />
 
 ### 9.3 Reçu PDF
-<img width="1725" height="1016" alt="Reçu PDF" src="https://github.com/user-attachments/assets/3" />
+<img src="./docs/5.png" alt="Recu commandes" style="width: 80%; height: auto;" />
 
-### 9.4 Eureka Dashboard
-<img width="1725" height="1016" alt="Eureka Dashboard" src="https://github.com/user-attachments/assets/4" />
+### 9.4 Mode sombre
+<img src="./docs/6.png" alt="mode sombre" style="width: 80%; height: auto;" />
+
+
 
 
 
@@ -262,21 +268,4 @@ mcommerce-microservices/
 └── README.md
 ```
 
----
-
-## 🚀 Prochaines améliorations possibles
-- Ajout de sécurité (Spring Security + JWT)
-- Base de données MySQL/PostgreSQL en production
-- Dockerisation complète
-- Logs centralisés (ELK Stack)
-- Tests unitaires et d'intégration
-- CI/CD avec GitHub Actions
-
----
-
-## 📄 Licence
-Ce projet est à but éducatif. Libre d'utilisation et de modification.
-
----
-
-**✨ Développé avec Spring Cloud & React ✨**
+**✨ Développé avec Spring Cloud & React : made by JOSKA✨**
