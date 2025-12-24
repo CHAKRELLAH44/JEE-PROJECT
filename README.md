@@ -75,7 +75,7 @@ v                                              v
     +-------------+
 ```
 
-<img src="./docs/7.png" alt="Architecture globale" style="width: 80%; height: auto;" />
+<img src="./MS/docs/7.png" alt="Architecture globale" style="width: 80%; height: auto;" />
 
 ### 3.2 Flux de fonctionnement
 1. Le **Front React** appelle uniquement la **Gateway** (point d'entrée unique).
@@ -196,20 +196,20 @@ Le front communique uniquement avec : `http://localhost:9103` (Gateway)
 ## 9) Captures d'écran
 
 ### 9.1 Interface Produits
-<img src="./docs/1.png" alt="Interface Produits" style="width: 80%; height: auto;" />
+<img src="./MS/docs/1.png" alt="Interface Produits" style="width: 80%; height: auto;" />
 
-<img src="./docs/2.png" alt="creation Produits" style="width: 80%; height: auto;" />
+<img src="./MS/docs/2.png" alt="creation Produits" style="width: 80%; height: auto;" />
 
 ### 9.2 Interface Commandes
-<img src="./docs/3.png" alt="Interface Commandes" style="width: 80%; height: auto;" />
+<img src="./MS/docs/3.png" alt="Interface Commandes" style="width: 80%; height: auto;" />
 
-<img src="./docs/4.png" alt="creation Commandes" style="width: 80%; height: auto;" />
+<img src="./MS/docs/4.png" alt="creation Commandes" style="width: 80%; height: auto;" />
 
 ### 9.3 Reçu PDF
-<img src="./docs/5.png" alt="Recu commandes" style="width: 80%; height: auto;" />
+<img src="./MS/docs/5.png" alt="Recu commandes" style="width: 80%; height: auto;" />
 
 ### 9.4 Mode sombre
-<img src="./docs/6.png" alt="mode sombre" style="width: 80%; height: auto;" />
+<img src="./MS/docs/6.png" alt="mode sombre" style="width: 80%; height: auto;" />
 
 
 
